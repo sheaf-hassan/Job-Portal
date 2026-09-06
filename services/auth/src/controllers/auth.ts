@@ -7,6 +7,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { forgotPasswordTemplate } from "../template.js";
 import { publishToTopic } from "../producer.js";
+import { redisClint } from "../index.js";
 
 
 export const  registerUser = TryCatch(async(req,res,next)=>{
@@ -144,6 +145,10 @@ export const forgotPassword = TryCatch(async(req, res, next)=>{
     );
 
     const resetLink = `${process.env.Frontend_Url}/reset/${resetToken}`;
+
+    await redisClint.set(`forgot:${email}`, resetToken,{
+        EX: 900,
+    })
 
     const message = {
         to: email,
