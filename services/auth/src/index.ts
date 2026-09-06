@@ -1,8 +1,15 @@
 import app from "./app.js";
 import dotenv from "dotenv";
 import { sql } from "./utils/db.js";
+import {createClient} from 'redis';
 
 dotenv.config();
+
+export const redisClint = createClient({
+  url: process.env.Redis_Url,
+});
+
+redisClint.connect().then(()=>console.log("Connected to redis")).catch(console.error);
 
 async function initDb() {
   try {
