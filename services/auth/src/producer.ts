@@ -62,7 +62,7 @@ export const publishToTopic = async(topic:string, message:any) => {
         });
 
     } catch (error) {
-        console.log("failed to publish message to kafka", error);
+        console.log("Failed to publish message to kafka", error);
     }
 };
 
