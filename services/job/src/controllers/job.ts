@@ -27,7 +27,7 @@ export const createCompany = TryCatch(
       throw new ErrorHandler(400, "All fields required");
     }
 
-    const existingCompanies = await sql`SELECT companies WHERE name = ${name}`;
+    const existingCompanies = await sql`SELECT company_id FROM companies WHERE name = ${name}`;
 
     if (existingCompanies.length > 0) {
       throw new ErrorHandler(
@@ -44,12 +44,12 @@ export const createCompany = TryCatch(
 
     const fileBuffer = getBuffer(file);
 
-    if (!fileBuffer || fileBuffer.content) {
+    if (!fileBuffer || !fileBuffer.content) {
       throw new ErrorHandler(500, "Failed to create file buffer");
     }
 
     const { data } = await axios.post(
-      `${process.env.UPLOAD_SERVICE}/api/upload`,
+      `${process.env.UPLOAD_SERVICE}/api/utils/upload`,
       { buffer: fileBuffer.content },
     );
 
