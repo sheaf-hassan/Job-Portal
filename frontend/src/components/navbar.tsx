@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import React, { useState } from 'react'
 import { Button } from './ui/button';
-import { Briefcase, Home, Info, LogOut, User } from 'lucide-react';
+import { Briefcase, Home, Info, LogOut, Menu, User, X } from 'lucide-react';
 import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
 import { Avatar, AvatarFallback } from './ui/avatar';
 import { ModeToggle } from './mode-toggle';
@@ -97,6 +97,15 @@ const NavBar = () => {
                     )}
 
                     <ModeToggle/>
+                </div>
+
+                {/* Mobile Menu Button */}
+                <div className="md:hidden flex items-center gap-3"> 
+                    <ModeToggle/>
+
+                    <button onClick={toggleMenu} className="p-2 rounded-lg hover:bg:accent transition-colors" aria-label="Toggle menu">
+                        {isOpen ? <X size={24}/> : <Menu size={24}/>}
+                    </button>
                 </div>
             </div>
         </div>
