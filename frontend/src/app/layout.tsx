@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import NavBar from "@/components/ui/navbar";
+import NavBar from "@/components/navbar";
+import { ThemeProvider } from "@/components/theme-provider";
 
 
 
@@ -15,7 +16,17 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       
     >
-      <body> <NavBar /> {children}</body>
+      <body> 
+        <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+
+            <NavBar /> {children}
+          </ThemeProvider>
+        </body>
     </html>
   );
 }
