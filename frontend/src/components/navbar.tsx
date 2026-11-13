@@ -8,6 +8,7 @@ import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
 import { Avatar, AvatarFallback } from './ui/avatar';
 import { ModeToggle } from './mode-toggle';
 
+
 const NavBar = () => {
 
     const [isOpen, setIsOpen] = useState(false);
@@ -58,7 +59,7 @@ const NavBar = () => {
                     {isAuth ? 
                     (
                         <Popover>
-                            <PopoverTrigger asChild>
+                            <PopoverTrigger>
                                 <button className="flex items-center gap-2 hover:opacity-80 transition-opacity">
                                     <Avatar className="h-9 w-9 ring-2 ring-offset-2 ring-offset-background ring-blue-500/20 cursor-pointer hover:ring-blue-500/40 transition-all">
                                     {/* <AvatarImage src={} alt=""/> */}
@@ -107,6 +108,51 @@ const NavBar = () => {
                         {isOpen ? <X size={24}/> : <Menu size={24}/>}
                     </button>
                 </div>
+            </div>
+        </div>
+
+        {/* Mobile View */}
+        <div className={`md:hidden border-t overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"}`}>
+            <div className="px-3 py-3 space-y-1 bg-background/95 backdrop-blur-md">
+            {/* isAuth or user */}
+               <Link href={'/'} onClick={toggleMenu}>
+                    <Button variant={"ghost"} className="w-full justify-start gap-3 h-full">
+                        <Home size={18}/> Home
+                    </Button>
+               </Link>
+               <Link href={'/jobs'} onClick={toggleMenu}>
+                    <Button variant={"ghost"} className="w-full justify-start gap-3 h-full">
+                        <Briefcase size={18}/> Jobs
+                    </Button>
+               </Link>
+               <Link href={'/about'} onClick={toggleMenu}>
+                    <Button variant={"ghost"} className="w-full justify-start gap-3 h-full">
+                        <Info size={18}/> About
+                    </Button>
+               </Link>
+
+               {isAuth ? (
+                <>
+                    <Link href={"/about"} onClick={toggleMenu}>
+                        <Button variant={"ghost"} className="w-full justify-start gap-3 h-11">
+                            <User size={18} /> My Profile
+                        </Button>
+                    </Link>
+                    <Button variant={"destructive"} 
+                    className="w-full justify-start gap-3 h-11" 
+                    onClick={() => {logoutHandler(); 
+                                    toggleMenu();
+                    }}>
+                        <LogOut size={18} /> Logout
+                    </Button>
+                </>
+               ) : (
+                <Link href={"/login"} onClick={toggleMenu}>
+                    <Button className="w-full justify-start gap-3 h-11 mt-2">
+                        <User size={18} /> SignIn
+                    </Button>
+                </Link>
+               )}
             </div>
         </div>
     </nav>
